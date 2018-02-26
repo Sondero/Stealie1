@@ -11,13 +11,17 @@ class AStealie1Character : public ACharacter
 {
 	GENERATED_BODY()
 
-	/** Camera boom positioning the camera behind the character */
+		/** Camera boom positioning the camera behind the character */
 	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;*/
 
 	/** Follow camera */
 	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;*/
+
+	/** Collection Sphere */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class USphereComponent* CollectionSphere;
 public:
 	AStealie1Character();
 
@@ -28,6 +32,9 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
+
+	UPROPERTY(EditAnywhere)
+	float PickupModifier = 0.95f;
 
 protected:
 
@@ -62,11 +69,15 @@ protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface
+	UFUNCTION(BlueprintCallable, Category = "Pickup")
+	void CollectPickups();
 
 public:
 	
+	//
+	FORCEINLINE class USphereComponent* GetCollectionSphere() const { return CollectionSphere; }
 	
-
+	
 	/** Returns CameraBoom subobject 
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }**/
 	//Returns FollowCamera subobject

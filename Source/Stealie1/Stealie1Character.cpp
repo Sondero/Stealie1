@@ -8,6 +8,9 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Pickup.h"
+#include "Engine/World.h"
+#include "Components/SphereComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AStealie1Character
@@ -31,6 +34,13 @@ AStealie1Character::AStealie1Character()
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
 	GetCharacterMovement()->JumpZVelocity = 300.f;
 	GetCharacterMovement()->AirControl = 0.2f;
+	
+
+
+	//Create the Collection Sphere
+	CollectionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollectionSphere"));
+	CollectionSphere->AttachTo(RootComponent);
+	CollectionSphere->SetSphereRadius(200.0f);
 
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	//CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -56,6 +66,8 @@ void AStealie1Character::SetupPlayerInputComponent(class UInputComponent* Player
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	PlayerInputComponent->BindAction("Collect", IE_Pressed, this, &AStealie1Character::CollectPickups);
+
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AStealie1Character::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AStealie1Character::MoveRight);
@@ -133,13 +145,23 @@ void AStealie1Character::MoveRight(float Value)
 	}
 }
 
-/*void AStealie1Character::FailSafe(float DeltaTime)
+
+void AStealie1Character::CollectPickups()
 {
-	Super::Tick(DeltaTime);
-	FVector Location = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
-	if (Location.Z < 100.0f)
+	TArray<AActor*> CollectedActors;
+	CollectionSphere->GetOverlappingActors(CollectedActors);
+
+	for (int iCollected = 0; iCollected < CollectedActors.Num(); ++iCollected)
 	{
-		GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(FailSafeLocation);
+		APickup* const TestPickup = Cast<APickup>(CollectedActors[iCollected]);
+		
+		if (TestPickup && !TestPickup->IsPendingKill() && TestPickup->IsActive())
+		{
+			TestPickup->WasCollected();
+
+			GetCharacterMovement()->MaxWalkSpeed = (GetCharacterMovement()->GetMaxSpeed()*PickupModifier);
+
+			TestPickup->SetActive(false);
+		}
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Failsafe is live!"))
-}*/
+}

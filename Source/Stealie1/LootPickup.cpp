@@ -10,3 +10,9 @@ ALootPickup::ALootPickup()
 
 }
 
+void ALootPickup::WasCollected_Implementation()
+{
+	Super::WasCollected_Implementation();
+
+	Destroy();
+}

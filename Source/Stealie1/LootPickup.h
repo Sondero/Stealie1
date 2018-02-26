@@ -18,5 +18,6 @@ public:
 	// Sets default values for this actor's properties
 	ALootPickup();
 	
+	void WasCollected_Implementation() override;
 	
 };
