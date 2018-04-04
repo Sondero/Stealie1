@@ -22,6 +22,10 @@ class AStealie1Character : public ACharacter
 	/** Collection Sphere */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USphereComponent* CollectionSphere;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class USphereComponent* CaughtSphere;
+
+
 public:
 	AStealie1Character();
 
@@ -35,6 +39,8 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float PickupModifier = 0.95f;
+	UPROPERTY(EditAnywhere)
+	float PickupJumpModifier = 0.99f;
 
 protected:
 

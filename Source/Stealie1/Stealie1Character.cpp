@@ -42,6 +42,11 @@ AStealie1Character::AStealie1Character()
 	CollectionSphere->AttachTo(RootComponent);
 	CollectionSphere->SetSphereRadius(200.0f);
 
+	//Create the Caught Sphere
+	CaughtSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CaughtSphere"));
+	CaughtSphere->AttachTo(RootComponent);
+	CaughtSphere->SetSphereRadius(80.0f);
+
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	//CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	//CameraBoom->SetupAttachment(RootComponent);
@@ -160,7 +165,7 @@ void AStealie1Character::CollectPickups()
 			TestPickup->WasCollected();
 
 			GetCharacterMovement()->MaxWalkSpeed = (GetCharacterMovement()->GetMaxSpeed()*PickupModifier);
-
+			GetCharacterMovement()->JumpZVelocity = (GetCharacterMovement()->JumpZVelocity*PickupJumpModifier);
 			TestPickup->SetActive(false);
 		}
 	}
