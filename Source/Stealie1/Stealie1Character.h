@@ -22,6 +22,10 @@ class AStealie1Character : public ACharacter
 	/** Collection Sphere */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USphereComponent* CollectionSphere;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class USphereComponent* CaughtSphere;
+
+
 public:
 	AStealie1Character();
 
@@ -33,8 +37,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
-	UPROPERTY(EditAnywhere)
+	//This should match the PickupModifier in DoorOpener.h and DoorOpener.cpp as well
+	UPROPERTY(VisibleAnywhere)
 	float PickupModifier = 0.95f;
+	//This should match the PickupJumpModifier in DoorOpener.h and DoorOpener.cpp as well
+	UPROPERTY(VisibleAnywhere)
+	float PickupJumpModifier = 0.99f;
+
 
 protected:
 
