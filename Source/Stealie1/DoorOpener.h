@@ -19,6 +19,8 @@ public:
 	void OpenDoorUp();
 	void OpenDoorRotate();
 
+	void CountPickups();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -26,14 +28,38 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
+	
+	float PlayerStartMaxSpeed;
+	
+	float PlayerCurrentMaxSpeed;
+	UPROPERTY(EditAnywhere)
+	int RequiredPickups = 5;
+	
+	
+	int CurrentPickups;
 
-		
+	bool DoorClosed = true;
+
+	//These bools are there to make sure messages aren't spammed.
+	bool DelayingVariableOne = 0;
+	bool DelayingVariableTwo = 0;
+
+
+
 private:
 	UPROPERTY(EditAnywhere)
 	float OpenMoveDistance = 200.0f;
 
 	UPROPERTY(EditAnywhere)
-	float OpenAngle = -75.0f;
+	float OpenAngle = 75.0f;
+
+	//This should match the PickupModifier in Stealie1Character.h and Stealie1Character.cpp as well
+	UPROPERTY(VisibleAnywhere)
+		float PickupSpeedModifier = 0.95f;
+	//This should match the PickupJumpModifier in Stealie1Character.h and Stealie1Character.cpp as well
+	UPROPERTY(VisibleAnywhere)
+		float PickupJumperModifier = 0.99f;
 	
 	//If DoorType is False, the door will rotate open, if doortype is true, the door will be moved open.
 	UPROPERTY(EditAnywhere)
@@ -41,5 +67,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* PressurePlate;
-	AActor * ActorThatOpens;
+	
+	AActor* ActorThatOpens;
+	AActor* Owner;
+	
+
 };

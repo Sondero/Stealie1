@@ -163,8 +163,6 @@ void AStealie1Character::CollectPickups()
 		if (TestPickup && !TestPickup->IsPendingKill() && TestPickup->IsActive())
 		{
 			TestPickup->WasCollected();
-			//MaxSpeed = GetCharacterMovement()->MaxWalkSpeed;
-			UE_LOG(LogTemp, Warning, TEXT("Your Max speed is Something"))
 			GetCharacterMovement()->MaxWalkSpeed = (GetCharacterMovement()->GetMaxSpeed()*PickupModifier);
 			GetCharacterMovement()->JumpZVelocity = (GetCharacterMovement()->JumpZVelocity*PickupJumpModifier);
 			TestPickup->SetActive(false);

@@ -37,12 +37,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
-	UPROPERTY(EditAnywhere)
+	//This should match the PickupModifier in DoorOpener.h and DoorOpener.cpp as well
+	UPROPERTY(VisibleAnywhere)
 	float PickupModifier = 0.95f;
-	UPROPERTY(EditAnywhere)
+	//This should match the PickupJumpModifier in DoorOpener.h and DoorOpener.cpp as well
+	UPROPERTY(VisibleAnywhere)
 	float PickupJumpModifier = 0.99f;
 
-	float MaxSpeed;
 
 protected:
 
