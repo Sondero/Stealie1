@@ -42,6 +42,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	float PickupJumpModifier = 0.99f;
 
+	float MaxSpeed;
+
 protected:
 
 	/** Resets HMD orientation in VR. */
