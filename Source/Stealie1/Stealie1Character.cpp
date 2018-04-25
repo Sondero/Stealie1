@@ -79,7 +79,6 @@ void AStealie1Character::SetupPlayerInputComponent(class UInputComponent* Player
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAction("Collect", IE_Pressed, this, &AStealie1Character::CollectPickups);
-	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AStealie1Character::PauseGame);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AStealie1Character::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AStealie1Character::MoveRight);
@@ -106,10 +105,6 @@ void AStealie1Character::OnResetVR()
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
 }
 
-void AStealie1Character::PauseGame()
-{
-
-}
 
 void AStealie1Character::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
@@ -175,9 +170,13 @@ void AStealie1Character::CollectPickups()
 		if (TestPickup && !TestPickup->IsPendingKill() && TestPickup->IsActive())
 		{
 			TestPickup->WasCollected();
-			GetCharacterMovement()->MaxWalkSpeed = (GetCharacterMovement()->GetMaxSpeed()*PickupModifier);
-			GetCharacterMovement()->JumpZVelocity = (GetCharacterMovement()->JumpZVelocity*PickupJumpModifier);
 
+			GetCharacterMovement()->MaxWalkSpeed = (GetCharacterMovement()->GetMaxSpeed()*PickupModifier);
+			
+			GetCharacterMovement()->JumpZVelocity = (GetCharacterMovement()->JumpZVelocity*PickupJumpModifier);
+			
+			FVector NewScale = (GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorScale3D())*PickupScaleModifier;
+			GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorScale3D(FVector (NewScale));
 			TestPickup->SetActive(false);
 		}
 	}

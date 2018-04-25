@@ -44,6 +44,9 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	float PickupJumpModifier = 0.99f;
 
+	UPROPERTY(EditAnywhere)
+	FVector PickupScaleModifier = { 1.05f,  1.05f ,1.05f };
+
 	//UPROPERTY(EditAnywhere)
 	//USkeletalMeshComponent* VisibleMeshComponent;
 
@@ -53,7 +56,6 @@ protected:
 	/** Resets HMD orientation in VR. */
 	void OnResetVR();
 
-	void PauseGame();
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
 
