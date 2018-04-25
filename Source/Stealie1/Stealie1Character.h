@@ -44,7 +44,8 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	float PickupJumpModifier = 0.99f;
 
-
+	//UPROPERTY(EditAnywhere)
+	//USkeletalMeshComponent* VisibleMeshComponent;
 
 protected:
 

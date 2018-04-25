@@ -12,6 +12,8 @@
 #include "Engine/World.h"
 #include "Components/SphereComponent.h"
 #include "Engine/Level.h"
+#include "Engine/SkeletalMesh.h"
+#include "Kismet/GameplayStatics.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AStealie1Character
@@ -48,6 +50,9 @@ AStealie1Character::AStealie1Character()
 	CaughtSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CaughtSphere"));
 	CaughtSphere->AttachTo(RootComponent);
 	CaughtSphere->SetSphereRadius(80.0f);
+
+	//VisibleMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("VisibleMeshComponent"));
+	//VisibleMeshComponent->AttachTo(RootComponent);
 
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	//CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -172,6 +177,7 @@ void AStealie1Character::CollectPickups()
 			TestPickup->WasCollected();
 			GetCharacterMovement()->MaxWalkSpeed = (GetCharacterMovement()->GetMaxSpeed()*PickupModifier);
 			GetCharacterMovement()->JumpZVelocity = (GetCharacterMovement()->JumpZVelocity*PickupJumpModifier);
+
 			TestPickup->SetActive(false);
 		}
 	}
