@@ -11,6 +11,7 @@
 #include "Pickup.h"
 #include "Engine/World.h"
 #include "Components/SphereComponent.h"
+#include "Engine/Level.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AStealie1Character
@@ -34,8 +35,9 @@ AStealie1Character::AStealie1Character()
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
 	GetCharacterMovement()->JumpZVelocity = 300.f;
 	GetCharacterMovement()->AirControl = 0.2f;
-	
-
+	GetCharacterMovement()->MaxWalkSpeedCrouched = (GetCharacterMovement()->MaxWalkSpeed)*0.5f;
+	GetCharacterMovement()->MaxSwimSpeed = PickupModifier;
+	GetCharacterMovement()->MaxFlySpeed = PickupJumpModifier;
 
 	//Create the Collection Sphere
 	CollectionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollectionSphere"));
@@ -72,7 +74,7 @@ void AStealie1Character::SetupPlayerInputComponent(class UInputComponent* Player
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAction("Collect", IE_Pressed, this, &AStealie1Character::CollectPickups);
-
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AStealie1Character::PauseGame);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AStealie1Character::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AStealie1Character::MoveRight);
@@ -91,12 +93,17 @@ void AStealie1Character::SetupPlayerInputComponent(class UInputComponent* Player
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AStealie1Character::OnResetVR);
-}
 
+}
 
 void AStealie1Character::OnResetVR()
 {
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
+}
+
+void AStealie1Character::PauseGame()
+{
+
 }
 
 void AStealie1Character::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)

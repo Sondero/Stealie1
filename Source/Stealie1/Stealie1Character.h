@@ -37,7 +37,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
-	//This should match the PickupModifier in DoorOpener.h and DoorOpener.cpp as well
+	//This should match the PickupModifier in DoorOpener.h and DoorOpener.cpp and the Get text 0 in the HUD Blueprint as well
 	UPROPERTY(VisibleAnywhere)
 	float PickupModifier = 0.95f;
 	//This should match the PickupJumpModifier in DoorOpener.h and DoorOpener.cpp as well
@@ -45,11 +45,14 @@ public:
 	float PickupJumpModifier = 0.99f;
 
 
+
 protected:
+
 
 	/** Resets HMD orientation in VR. */
 	void OnResetVR();
 
+	void PauseGame();
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
 
