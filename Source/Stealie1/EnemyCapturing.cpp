@@ -58,7 +58,9 @@ void UEnemyCapturing::PlayerGetsCaught()
 {
 	if (PlayerCaughtState == 0)
 	{
+		FVector PlayerLostLocation = { 10000.0f, 10000.0f, 10000.0f };
 		UE_LOG(LogTemp, Warning, TEXT("You have been Caught!"))
+		GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(PlayerLostLocation);
 		PlayerCaughtState = -1;
 	}
 	

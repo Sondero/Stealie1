@@ -6,6 +6,13 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Stealie1Character.h"
 #include <cmath>
+#include "Stealie1Character.h"
+#include "HeadMountedDisplayFunctionLibrary.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/InputComponent.h"
+#include "GameFramework/Controller.h"
+#include "Pickup.h"
 
 // Sets default values for this component's properties
 UDoorOpener::UDoorOpener()
@@ -27,8 +34,7 @@ void UDoorOpener::BeginPlay()
 	ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
 	//Gets the Max Speed the Player has
 	PlayerStartMaxSpeed = GetWorld()->GetFirstPlayerController()->GetPawn()->GetMovementComponent()->GetMaxSpeed();
-	
-	
+
 }
 
 
