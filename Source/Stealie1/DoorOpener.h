@@ -56,10 +56,10 @@ private:
 
 	//This should match the PickupModifier in Stealie1Character.h and Stealie1Character.cpp and the Get text 0 in the HUD Blueprint  as well
 	UPROPERTY(VisibleAnywhere)
-		float PickupSpeedModifier = 0.95;
+		float PickupSpeedModifier = 0.95f;
 	//This should match the PickupJumpModifier in Stealie1Character.h and Stealie1Character.cpp as well
 	UPROPERTY(VisibleAnywhere)
-		float PickupJumperModifier = 0.99;
+		float PickupJumperModifier = 0.99f;
 	
 	//If DoorType is False, the door will rotate open, if doortype is true, the door will be moved open.
 	UPROPERTY(EditAnywhere)
