@@ -32,9 +32,6 @@ public:
 	FVector FailSafeLocation = { -1660.0f, 1160.0f, 236.0f };
 
 	UPROPERTY(EditAnywhere)
-	FVector VictoryLocation = { 10000.0f, 4360.0f, 10000.0f };
-
-	UPROPERTY(EditAnywhere)
 	ATriggerVolume* WinBox;
 
 	UPROPERTY(EditAnywhere)

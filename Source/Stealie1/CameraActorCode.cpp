@@ -41,12 +41,14 @@ void UCameraActorCode::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 	if (WinBox->IsOverlappingActor(GetWorld()->GetFirstPlayerController()->GetPawn()))
 	{
+
 		GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(WinLocation);
 	}
 
 
 	if (WinBox->IsOverlappingActor(GetWorld()->GetFirstPlayerController()->GetPawn()))
 	{
-		GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(VictoryLocation);
+		GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(WinLocation);
 	}
+
 }
