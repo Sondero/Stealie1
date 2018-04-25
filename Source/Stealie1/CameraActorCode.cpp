@@ -4,6 +4,7 @@
 #include "Components/ActorComponent.h"
 #include "Engine/ActorChannel.h"
 #include "Engine/World.h"
+#include "Engine/TriggerVolume.h"
 
 
 // Sets default values for this component's properties
@@ -36,6 +37,11 @@ void UCameraActorCode::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	if (PlayerLocation.Z < 0.0f) ///This is a Failsafe that makes sure UE4 doesn't crash if the character falls OoB.
 	{
 		GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(FailSafeLocation);
+	}
+
+	if (WinBox->IsOverlappingActor(GetWorld()->GetFirstPlayerController()->GetPawn()))
+	{
+		GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(VictoryLocation);
 	}
 
 }
