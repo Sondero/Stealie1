@@ -12,6 +12,8 @@
 #include "Engine/World.h"
 #include "Components/SphereComponent.h"
 #include "Engine/Level.h"
+#include "Engine/SkeletalMesh.h"
+#include "Kismet/GameplayStatics.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AStealie1Character
@@ -49,6 +51,9 @@ AStealie1Character::AStealie1Character()
 	CaughtSphere->AttachTo(RootComponent);
 	CaughtSphere->SetSphereRadius(80.0f);
 
+	//VisibleMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("VisibleMeshComponent"));
+	//VisibleMeshComponent->AttachTo(RootComponent);
+
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	//CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	//CameraBoom->SetupAttachment(RootComponent);
@@ -74,7 +79,6 @@ void AStealie1Character::SetupPlayerInputComponent(class UInputComponent* Player
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAction("Collect", IE_Pressed, this, &AStealie1Character::CollectPickups);
-	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AStealie1Character::PauseGame);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AStealie1Character::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AStealie1Character::MoveRight);
@@ -101,10 +105,6 @@ void AStealie1Character::OnResetVR()
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
 }
 
-void AStealie1Character::PauseGame()
-{
-
-}
 
 void AStealie1Character::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
@@ -170,8 +170,13 @@ void AStealie1Character::CollectPickups()
 		if (TestPickup && !TestPickup->IsPendingKill() && TestPickup->IsActive())
 		{
 			TestPickup->WasCollected();
+
 			GetCharacterMovement()->MaxWalkSpeed = (GetCharacterMovement()->GetMaxSpeed()*PickupModifier);
+			
 			GetCharacterMovement()->JumpZVelocity = (GetCharacterMovement()->JumpZVelocity*PickupJumpModifier);
+			
+			FVector NewScale = (GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorScale3D())*PickupScaleModifier;
+			GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorScale3D(FVector (NewScale));
 			TestPickup->SetActive(false);
 		}
 	}
