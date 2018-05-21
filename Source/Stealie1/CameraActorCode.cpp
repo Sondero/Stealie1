@@ -39,16 +39,17 @@ void UCameraActorCode::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 		GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(FailSafeLocation);
 	}
 
-	if (WinBox->IsOverlappingActor(GetWorld()->GetFirstPlayerController()->GetPawn()))
+	/*if (WinBox->IsOverlappingActor(GetWorld()->GetFirstPlayerController()->GetPawn()))
 	{
-
-		GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(WinLocation);
+		GetNextLevel();
+		//GetWorld()->GetFirstPlayerController()->SwitchLevel(NextLevel);
+		//GetWorld()->SetCurrentLevel(NextLevel);
 	}
 
 
 	if (WinBox->IsOverlappingActor(GetWorld()->GetFirstPlayerController()->GetPawn()))
 	{
 		GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(WinLocation);
-	}
+	}*/
 
 }

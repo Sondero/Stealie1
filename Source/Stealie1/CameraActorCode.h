@@ -31,13 +31,15 @@ public:
 	UPROPERTY(EditAnywhere)
 	FVector FailSafeLocation = { -1660.0f, 1160.0f, 236.0f };
 
-	UPROPERTY(EditAnywhere)
+	/*UPROPERTY(EditAnywhere)
 	ATriggerVolume* WinBox;
 
 	UPROPERTY(EditAnywhere)
-	FVector WinLocation = { 10000.0f, 4360.0f, 10000.0f };
+	FVector WinLocation = { 10000.0f, 4360.0f, 10000.0f };*/
 
 private:
-	
+	/* GetNextLevel();
 
+	UPROPERTY(EditAnywhere)
+	ULevel* NextLevel;*/
 };
