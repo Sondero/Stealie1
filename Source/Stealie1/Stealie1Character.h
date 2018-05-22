@@ -45,7 +45,14 @@ public:
 	float PickupJumpModifier = 0.99f;
 
 	UPROPERTY(EditAnywhere)
-	FVector PickupScaleModifier = { 1.05f,  1.05f ,1.05f };
+	FVector PickupScaleModifier = { 2.5f , 2.5f , 2.5f };
+
+	float NewScaleX;
+	float NewScaleY;
+	float NewScaleZ;
+
+	UPROPERTY(EditAnywhere)
+	FVector PickupScaleCap = { 500.0f, 500.0f , 500.0f };
 
 	//UPROPERTY(EditAnywhere)
 	//USkeletalMeshComponent* VisibleMeshComponent;

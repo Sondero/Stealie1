@@ -174,9 +174,46 @@ void AStealie1Character::CollectPickups()
 			GetCharacterMovement()->MaxWalkSpeed = (GetCharacterMovement()->GetMaxSpeed()*PickupModifier);
 			
 			GetCharacterMovement()->JumpZVelocity = (GetCharacterMovement()->JumpZVelocity*PickupJumpModifier);
+
+			FVector Actorscale = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorScale3D();
+			if ((Actorscale.X + PickupScaleModifier.X) < PickupScaleCap.X)
+			{
+				NewScaleX = (Actorscale.X) + PickupScaleModifier.X;
+				
+			}
+			else
+			{
+				NewScaleX = PickupScaleCap.X;
+			}
 			
-			FVector NewScale = (GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorScale3D())*PickupScaleModifier;
-			GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorScale3D(FVector (NewScale));
+			if ((Actorscale.Y + PickupScaleModifier.Y) <= PickupScaleCap.Y)
+			{
+				NewScaleY = (Actorscale.Y) + PickupScaleModifier.Y;
+
+			}
+			else
+			{
+				NewScaleY = PickupScaleCap.Y;
+			}
+
+			if ((Actorscale.Z + PickupScaleModifier.Z) <= PickupScaleCap.Z)
+			{
+				NewScaleZ = (Actorscale.Z) + PickupScaleModifier.Z;
+
+			}
+			else
+			{
+				NewScaleZ = PickupScaleCap.Z;
+			}
+
+			
+			FVector NewScale = { NewScaleX, NewScaleY, NewScaleZ };
+			GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorScale3D(FVector(NewScale));
+			
+			FString YourNewSize = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorScale3D().ToString();
+			
+			UE_LOG(LogTemp, Warning, TEXT("Your new size is %s "), *YourNewSize)
+
 			TestPickup->SetActive(false);
 		}
 	}
