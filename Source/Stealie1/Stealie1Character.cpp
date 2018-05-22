@@ -171,8 +171,13 @@ void AStealie1Character::CollectPickups()
 		{
 			TestPickup->WasCollected();
 
-			GetCharacterMovement()->MaxWalkSpeed = (GetCharacterMovement()->GetMaxSpeed()*PickupModifier);
+			float MaxSpeed = GetCharacterMovement()->MaxWalkSpeed;
+			if (MaxSpeed*PickupModifier > MinSpeedCap)
+				GetCharacterMovement()->MaxWalkSpeed = (GetCharacterMovement()->MaxWalkSpeed*PickupModifier);
 
+			else
+				GetCharacterMovement()->MaxWalkSpeed = MinSpeedCap;
+				
 			GetCharacterMovement()->JumpZVelocity = (GetCharacterMovement()->JumpZVelocity*PickupJumpModifier);
 
 			FVector Actorscale = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorScale3D();
@@ -214,12 +219,6 @@ void AStealie1Character::CollectPickups()
 
 			UE_LOG(LogTemp, Warning, TEXT("Your new size is %s "), *YourNewSize)
 
-				TestPickup->SetActive(false);
-			
-			GetCharacterMovement()->JumpZVelocity = (GetCharacterMovement()->JumpZVelocity*PickupJumpModifier);
-			
-			FVector NewScale = (GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorScale3D())*PickupScaleModifier;
-			GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorScale3D(FVector (NewScale));
 			TestPickup->SetActive(false);
 		}
 	}

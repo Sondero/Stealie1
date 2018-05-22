@@ -38,14 +38,14 @@ public:
 		float BaseLookUpRate;
 
 	//This should match the PickupModifier in DoorOpener.h and DoorOpener.cpp and the Get text 0 in the HUD Blueprint as well
-	UPROPERTY(VisibleAnywhere)
-		float PickupModifier = 0.95f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		float PickupModifier = 0.97f;
 	//This should match the PickupJumpModifier in DoorOpener.h and DoorOpener.cpp as well
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float PickupJumpModifier = 0.99f;
 
 	UPROPERTY(EditAnywhere)
-		FVector PickupScaleModifier = { 2.5f , 2.5f , 2.5f };
+	FVector PickupScaleModifier = { 2.5f , 2.5f , 2.5f };
 
 
 	float NewScaleX;
@@ -53,11 +53,10 @@ public:
 	float NewScaleZ;
 
 	UPROPERTY(EditAnywhere)
-		FVector PickupScaleCap = { 500.0f, 500.0f , 500.0f };
-
-
+	FVector PickupScaleCap = { 0.9f, 0.9f , 0.7f };
 	UPROPERTY(EditAnywhere)
-	FVector PickupScaleModifier = { 1.05f,  1.05f ,1.05f };
+	float MinSpeedCap = 200.0f;
+
 
 
 	//UPROPERTY(EditAnywhere)

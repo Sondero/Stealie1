@@ -76,7 +76,11 @@ void UDoorOpener::CountPickups()
 {
 	if (DelayingVariableOne == 0)
 	{
-	PlayerCurrentMaxSpeed = GetWorld()->GetFirstPlayerController()->GetPawn()->GetMovementComponent()->GetMaxSpeed();
+
+
+
+		PlayerCurrentMaxSpeed = GetWorld()->GetFirstPlayerController()->GetPawn()->GetMovementComponent()->GetMaxSpeed();
+		//PlayerCurrentMaxJump = AStealie1Character::GetCharacterMovement()->JumpZVelocity;
 
 	CurrentPickups = (int) floor(0.5f - ((logf(PlayerStartMaxSpeed) / logf(PickupSpeedModifier)) -
 		(logf(PlayerCurrentMaxSpeed) / logf(PickupSpeedModifier))));
