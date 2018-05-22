@@ -215,6 +215,12 @@ void AStealie1Character::CollectPickups()
 			UE_LOG(LogTemp, Warning, TEXT("Your new size is %s "), *YourNewSize)
 
 				TestPickup->SetActive(false);
+			
+			GetCharacterMovement()->JumpZVelocity = (GetCharacterMovement()->JumpZVelocity*PickupJumpModifier);
+			
+			FVector NewScale = (GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorScale3D())*PickupScaleModifier;
+			GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorScale3D(FVector (NewScale));
+			TestPickup->SetActive(false);
 		}
 	}
 }
