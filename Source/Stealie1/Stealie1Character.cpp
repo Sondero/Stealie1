@@ -108,12 +108,12 @@ void AStealie1Character::OnResetVR()
 
 void AStealie1Character::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
-		Jump();
+	Jump();
 }
 
 void AStealie1Character::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
-		StopJumping();
+	StopJumping();
 }
 
 void AStealie1Character::TurnAtRate(float Rate)
@@ -144,12 +144,12 @@ void AStealie1Character::MoveForward(float Value)
 
 void AStealie1Character::MoveRight(float Value)
 {
-	if ( (Controller != NULL) && (Value != 0.0f) )
+	if ((Controller != NULL) && (Value != 0.0f))
 	{
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-	
+
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
@@ -166,12 +166,55 @@ void AStealie1Character::CollectPickups()
 	for (int iCollected = 0; iCollected < CollectedActors.Num(); ++iCollected)
 	{
 		APickup* const TestPickup = Cast<APickup>(CollectedActors[iCollected]);
-		
+
 		if (TestPickup && !TestPickup->IsPendingKill() && TestPickup->IsActive())
 		{
 			TestPickup->WasCollected();
 
 			GetCharacterMovement()->MaxWalkSpeed = (GetCharacterMovement()->GetMaxSpeed()*PickupModifier);
+
+			GetCharacterMovement()->JumpZVelocity = (GetCharacterMovement()->JumpZVelocity*PickupJumpModifier);
+
+			FVector Actorscale = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorScale3D();
+			if ((Actorscale.X + PickupScaleModifier.X) < PickupScaleCap.X)
+			{
+				NewScaleX = (Actorscale.X) + PickupScaleModifier.X;
+
+			}
+			else
+			{
+				NewScaleX = PickupScaleCap.X;
+			}
+
+			if ((Actorscale.Y + PickupScaleModifier.Y) <= PickupScaleCap.Y)
+			{
+				NewScaleY = (Actorscale.Y) + PickupScaleModifier.Y;
+
+			}
+			else
+			{
+				NewScaleY = PickupScaleCap.Y;
+			}
+
+			if ((Actorscale.Z + PickupScaleModifier.Z) <= PickupScaleCap.Z)
+			{
+				NewScaleZ = (Actorscale.Z) + PickupScaleModifier.Z;
+
+			}
+			else
+			{
+				NewScaleZ = PickupScaleCap.Z;
+			}
+
+
+			FVector NewScale = { NewScaleX, NewScaleY, NewScaleZ };
+			GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorScale3D(FVector(NewScale));
+
+			FString YourNewSize = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorScale3D().ToString();
+
+			UE_LOG(LogTemp, Warning, TEXT("Your new size is %s "), *YourNewSize)
+
+				TestPickup->SetActive(false);
 			
 			GetCharacterMovement()->JumpZVelocity = (GetCharacterMovement()->JumpZVelocity*PickupJumpModifier);
 			
